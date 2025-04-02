@@ -139,17 +139,20 @@ string attackTypeToString(int attackType)
 int Card::counter = 1;
 
 Card::Card()
-: id(counter++), attack(1), hp(1), cost(1), name("NO NAME"), title("None"), race("None"), attackType("Physical"),
-    isCreature(false), isSpell(false), hasSpawnEffect(false)
+    : id(counter++), attack(1), hp(1), cost(1), name("NO NAME"), title("None"), race("None"), attackType("Physical"),
+      isCreature(false), isSpell(false), hasSpawnEffect(false)
 {
-    for (int i = 0; i < MAX_ATTACK_TYPES; i++){
+    for (int i = 0; i < MAX_ATTACK_TYPES; i++)
+    {
         attackImmunities[i] = false;
     }
-    for (int i = 0; i < MAX_ATTRIBUTES; i++){
+    for (int i = 0; i < MAX_ATTRIBUTES; i++)
+    {
         statusAttributes[i] = false;
         statusImmunities[i] = false;
     }
-    for (int i = 0; i < MAX_SPECIAL_ATTRIBUTES; i++){
+    for (int i = 0; i < MAX_SPECIAL_ATTRIBUTES; i++)
+    {
         specialStatusAttributes[i] = 0;
         specialStatusImmunities[i] = false;
     }
@@ -157,17 +160,20 @@ Card::Card()
 
 // Constructor for empty card
 Card::Card(string name, int cost)
-: id(counter++), attack(1), hp(1), cost(cost), name(name), title("None"), race("None"), attackType("Physical"),
-    isCreature(false), isSpell(false), hasSpawnEffect(false)
+    : id(counter++), attack(1), hp(1), cost(cost), name(name), title("None"), race("None"), attackType("Physical"),
+      isCreature(false), isSpell(false), hasSpawnEffect(false)
 {
-    for (int i = 0; i < MAX_ATTACK_TYPES; i++){
+    for (int i = 0; i < MAX_ATTACK_TYPES; i++)
+    {
         attackImmunities[i] = false;
     }
-    for (int i = 0; i < MAX_ATTRIBUTES; i++){
+    for (int i = 0; i < MAX_ATTRIBUTES; i++)
+    {
         statusAttributes[i] = false;
         statusImmunities[i] = false;
     }
-    for (int i = 0; i < MAX_SPECIAL_ATTRIBUTES; i++){
+    for (int i = 0; i < MAX_SPECIAL_ATTRIBUTES; i++)
+    {
         specialStatusAttributes[i] = 0;
         specialStatusImmunities[i] = false;
     }
@@ -215,7 +221,8 @@ void Card::addStatusAttribute(string status)
         this->specialStatusAttributes[index - MAX_ATTRIBUTES] = true;
 }
 
-void Card::addTitle(string title){
+void Card::addTitle(string title)
+{
     this->title = title;
 }
 
@@ -239,9 +246,51 @@ int Card::getHP()
     return this->hp;
 }
 
+int Card::getID()
+{
+    return this->id;
+}
+
 int Card::getCost()
 {
     return this->cost;
+}
+
+string Card::getRace() const
+{
+    return this->race;
+}
+
+string Card::getAttackType() const
+{
+    return this->attackType;
+}
+
+bool Card::hasAttackImmunity(string attackType)
+{
+    return this->attackImmunities[attackTypeHash(attackType)];
+}
+
+bool Card::hasStatusAttribute(string attribute)
+{
+    int index = attrHash(attribute);
+    if (index >= 0 && index < MAX_ATTRIBUTES)
+        return this->statusAttributes[index];
+    index = specialAttrHash(attribute);
+    if (index >= MAX_ATTRIBUTES && index < MAX_SPECIAL_ATTRIBUTES + MAX_ATTRIBUTES)
+        return this->specialStatusAttributes[index];
+    return false;
+}
+
+bool Card::hasStatusImmunities(string immunity)
+{
+    int index = attrHash(immunity);
+    if (index >= 0 && index < MAX_ATTRIBUTES)
+        return this->statusImmunities[index];
+    index = specialAttrHash(immunity);
+    if (index >= MAX_ATTRIBUTES && index < MAX_SPECIAL_ATTRIBUTES + MAX_ATTRIBUTES)
+        return this->specialStatusImmunities[index];
+    return false;
 }
 
 void Card::print() const
@@ -257,7 +306,7 @@ void Card::print() const
     {
         if (attackImmunities[i])
             cout << "\t" << attackTypeToString(i) << endl;
-    }    
+    }
     cout << "\nStatus Attributes: " << endl;
     for (int i = 0; i < MAX_ATTRIBUTES; i++)
     {
@@ -285,11 +334,30 @@ void Card::print() const
     cout << "----------------------------------------------------------" << endl;
 }
 
+bool Card::isValid()
+{
+    if (this->isCreature || this->isSpell)
+        return true;
+    return false;
+}
+
+void Card::createCopy(Card target)
+{
+    this->attack = target.getAttack();
+    this->cost = target.getCost();
+    this->hp = target.getHP();
+    this->id = target.getID();
+    this->title = target.getTitle();
+    this->name = target.getName();
+    this->race = target.getRace();
+    this->attackType = target.getAttackType();
+    // Incomplete
+}
+
 Card::~Card()
 {
     // Currently no dynamic memory to free
 }
-
 
 map<string, Card> createDictionary()
 {
@@ -297,12 +365,12 @@ map<string, Card> createDictionary()
     /**********************************
      * Creature Cards
      *********************************/
-    
+
     /************ Humans *************/
     // Warrior
     cards.emplace("Warrior", Card("Warrior", 2));
     cards["Warrior"].buildCreature(2, 2);
-    
+
     // Blue Mage
     cards.emplace("B. Mage", Card("B. Mage", 2));
     cards["B. Mage"].buildCreature(3, 1, "Magical");
@@ -332,7 +400,6 @@ map<string, Card> createDictionary()
     cards.emplace("Dark Knight", Card("Dark Knight", 4));
     cards["Dark Knight"].buildCreature(1, 5);
     cards["Dark Knight"].addStatusAttribute("Berserk");
-
 
     /**********************************
      * Spells

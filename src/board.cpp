@@ -3,6 +3,7 @@
 
 #include "card.h"
 #include "player.h"
+#include "board.h"
 
 using namespace std;
 
@@ -19,6 +20,29 @@ using namespace std;
 
 #define CARDWIDTH 16
 #define CARDHEIGHT 8
+
+
+Board::Board(){
+    int i;
+    // probably place an auxiliary array of bools to track which positions have a card placed in them or not.
+    for (i = 0; i < 4; i++)
+        PlayerCreatures[i] = Card("Empty", 0);
+    for (i = 0; i < 4; i++)
+        EnemyCreatures[i] = Card("Empty", 0);
+    
+}
+
+void Board::PlacePlayerCreature(Player p, int card_idx){
+
+    int i;
+    for (i = 0; i < 4; i++)
+    {
+        if (this->PlayerCreatures[i].isValid() == false){
+            this->PlayerCreatures[i] = p.getHandCard(card_idx);
+            // must remove the card from the player's hand also
+        }
+    }
+}
 
 void moveTo(int x, int y)
 {
@@ -106,6 +130,8 @@ void drawCenterBoard(int x, int y)
     drawBox(x + 1 * s + 1, y + h, s, h);
     drawBox(x + 2 * s + 2, y + h, s, h);
     drawBox(x + 3 * s + 3, y + h, s, h);
+
+    // Must draw all cards that were placed
 }
 
 void drawBoardTop(int x, int y)

@@ -21,15 +21,24 @@ class Card{
         void addAttackImmunity(string immunity);
         void addStatusImmunity(string immunity);
         void addStatusAttribute(string status);
+        void createCopy(Card target);
         string getName() const;
         string getTitle() const;
+        string getRace() const;
+        string getAttackType() const;
         int getAttack();
         int getHP();
+        int getID();
         int getCost();
         void print() const;
+        bool hasAttackImmunity(string attackType);
+        bool hasStatusAttribute(string attribute);
+        bool hasStatusImmunities(string immunity);
+        bool isValid();
         ~Card();
     private:
         int id;
+        bool valid; // auxiliary variable; if false, this card is the same as being empty
         static int counter;
         int attack;
         int hp;
