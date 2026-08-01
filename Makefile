@@ -1,52 +1,33 @@
-# Compiler and flags
-CXX := g++
-CXXFLAGS := -Wall -Wextra -std=c++17 -O2
-DEBUGFLAGS := -g
+CC = gcc
 
-# Directories
-SRC_DIR := src
-OBJ_DIR := obj
-BIN_DIR := bin
+CFLAGS = -Wall -Wextra -std=c11 -g
 
-# Output executable
-TARGET := $(BIN_DIR)/program
+SRC_DIR = src
 
-# Find all source files and corresponding object files
-SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
-OBJECTS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
+CARDDB = carddb
+VIEWER = card_viewer
 
-# Debug printing to verify sources and objects
-$(info SOURCES: $(SOURCES))
-$(info OBJECTS: $(OBJECTS))
+COMMON_SRC = $(SRC_DIR)/cJSON.c
 
-# Default target
-all: check_sources $(TARGET)
+CARDDB_SRC = \
+	$(SRC_DIR)/create_cards.c \
+	$(COMMON_SRC)
 
-# Check if any source files were found
-check_sources:
-	@if [ -z "$(SOURCES)" ]; then \
-		echo "Error: No source files found in $(SRC_DIR)"; \
-		exit 1; \
-	fi
+VIEWER_SRC = \
+	$(filter-out $(SRC_DIR)/create_cards.c,$(wildcard $(SRC_DIR)/*.c))
 
-# Debug build target
-debug: CXXFLAGS += $(DEBUGFLAGS)
-debug: all
+all: $(CARDDB) $(VIEWER)
 
-# Link the final executable
-$(TARGET): $(OBJECTS) | $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
+$(CARDDB): $(CARDDB_SRC)
+	$(CC) $(CFLAGS) $^ -o $@
 
-# Compile source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(VIEWER): $(VIEWER_SRC)
+	$(CC) $(CFLAGS) $^ -o $@
 
-# Create directories if they don’t exist
-$(BIN_DIR) $(OBJ_DIR):
-	mkdir -p $@
-
-# Clean build artifacts
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -f $(CARDDB) $(VIEWER)
 
-.PHONY: all debug clean check_sources
+run: $(VIEWER)
+	./$(VIEWER)
+
+.PHONY: all clean run

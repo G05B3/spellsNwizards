@@ -1,0 +1,47 @@
+{
+	"cards":	[{
+			"name":	"Warrior",
+			"image_id":	0,
+			"color_palette":	["orange", "white"]
+		}, {
+			"name":	"Blue Mage",
+			"image_id":	1,
+			"color_palette":	["blue", "yellow", "gray"]
+		}, {
+			"name":	"White Mage",
+			"image_id":	2,
+			"color_palette":	["white", "yellow"]
+		}, {
+			"name":	"Armored Dragon",
+			"image_id":	3,
+			"color_palette":	["green", "yellow"]
+		}, {
+			"name":	"Flaming Dragon",
+			"image_id":	3,
+			"color_palette":	["red", "yellow"]
+		}, {
+			"name":	"Wise Dragon",
+			"image_id":	3,
+			"color_palette":	["blue", "magenta"]
+		}, {
+			"name":	"Ancient Dragon",
+			"image_id":	3,
+			"color_palette":	["white", "blue"]
+		}, {
+			"name":	"Bone Dragon",
+			"image_id":	3,
+			"color_palette":	["gray", "red"]
+		}, {
+			"name":	"Goblin",
+			"image_id":	4,
+			"color_palette":	["lime", "yellow"]
+		}, {
+			"name":	"Hobgoblin",
+			"image_id":	4,
+			"color_palette":	["orange", "yellow"]
+		}, {
+			"name":	"Goblin Shaman",
+			"image_id":	4,
+			"color_palette":	["green", "red"]
+		}]
+}

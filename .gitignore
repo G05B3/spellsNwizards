@@ -1,0 +1,6 @@
+/bin
+/obj
+/src_old
+Makefile_old
+carddb
+card_viewer
