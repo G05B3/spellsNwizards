@@ -28,5 +28,7 @@ int main(void)
     reset_color();
     show_cursor();
 
+    print_statistics(&db);
+
     return 0;
 }

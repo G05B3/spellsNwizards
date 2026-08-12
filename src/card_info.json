@@ -2,15 +2,271 @@
 	"cards":	[{
 			"name":	"Warrior",
 			"image_id":	0,
-			"color_palette":	["orange", "white"]
+			"color_palette":	["orange", "white"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	3,
+			"cost":	2,
+			"race":	["human"],
+			"atk_type":	"Physical"
 		}, {
 			"name":	"Blue Mage",
 			"image_id":	1,
-			"color_palette":	["blue", "yellow", "gray"]
+			"color_palette":	["blue", "yellow", "gray"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	3,
+			"cost":	2,
+			"atk_type":	"Magic",
+			"race":	["human"],
+			"abilities":	[]
 		}, {
 			"name":	"White Mage",
 			"image_id":	2,
-			"color_palette":	["white", "yellow"]
+			"color_palette":	["white", "yellow"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	3,
+			"cost":	2,
+			"atk_type":	"Magic",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"Healer"
+				}]
+		}, {
+			"name":	"Nature's Blessing",
+			"image_id":	7,
+			"color_palette":	["red", "green", "cyan"],
+			"card_type":	"spell",
+			"atk":	0,
+			"hp":	0,
+			"cost":	2,
+			"atk_type":	"None",
+			"race":	[],
+			"abilities":	[],
+			"on_cast":	0
+		}, {
+			"name":	"Soldier",
+			"image_id":	5,
+			"color_palette":	["gray", "white"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	1,
+			"cost":	1,
+			"atk_type":	"Physical",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"Guardian"
+				}]
+		}, {
+			"name":	"Thief",
+			"image_id":	6,
+			"color_palette":	["gray", "yellow"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	3,
+			"cost":	3,
+			"atk_type":	"Physical",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"Poison Tip",
+					"value":	2
+				}]
+		}, {
+			"name":	"Commander",
+			"image_id":	8,
+			"color_palette":	["red", "gray"],
+			"card_type":	"creature",
+			"atk":	3,
+			"hp":	4,
+			"cost":	4,
+			"atk_type":	"Physical",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"Attack Immunity",
+					"value":	["Magic"]
+				}, {
+					"type":	"Army",
+					"value":	"Soldier"
+				}, {
+					"type":	"Multiple Attacks",
+					"value":	2
+				}]
+		}, {
+			"name":	"Knight",
+			"image_id":	9,
+			"color_palette":	["gray", "red"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	4,
+			"cost":	3,
+			"atk_type":	"Physical",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"Attack Immunity",
+					"value":	["Magic"]
+				}, {
+					"type":	"Multiple Attacks",
+					"value":	2
+				}]
+		}, {
+			"name":	"Embers",
+			"image_id":	10,
+			"color_palette":	["red", "orange", "yellow"],
+			"card_type":	"spell",
+			"on_cast":	2
+		}, {
+			"name":	"Archer",
+			"image_id":	11,
+			"color_palette":	["white", "brown"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	1,
+			"cost":	2,
+			"atk_type":	"Physical",
+			"race":	["human"],
+			"abilities":	[{
+					"type":	"First Strike"
+				}]
+		}, {
+			"name":	"King",
+			"image_id":	12,
+			"color_palette":	["white", "red", "yellow", "lime", "blue"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	3,
+			"cost":	5,
+			"atk_type":	"Physical",
+			"race":	["Human"],
+			"abilities":	[{
+					"type":	"Army",
+					"value":	"Human"
+				}],
+			"on_cast":	2
+		}, {
+			"name":	"Dragonslayer",
+			"image_id":	5,
+			"color_palette":	["blue", "white", "red", "yellow"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	5,
+			"cost":	5,
+			"atk_type":	"Physical",
+			"race":	["Human"],
+			"abilities":	[{
+					"type":	"Multiple Attacks",
+					"value":	3
+				}, {
+					"type":	"Berserk",
+					"value":	1
+				}, {
+					"type":	"Attack Immunity",
+					"value":	["Magic"]
+				}],
+			"on_cast":	3
+		}, {
+			"name":	"Goblin",
+			"image_id":	4,
+			"color_palette":	["lime", "yellow", "white"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	1,
+			"cost":	1,
+			"atk_type":	"Physical",
+			"race":	["Goblin"],
+			"abilities":	[]
+		}, {
+			"name":	"Goblin Shaman",
+			"image_id":	14,
+			"color_palette":	["green", "red", "white", "brown", "gray", "yellow"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	2,
+			"cost":	2,
+			"atk_type":	"Magic",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"Poison Tip",
+					"value":	1
+				}]
+		}, {
+			"name":	"Hobgoblin",
+			"image_id":	4,
+			"color_palette":	["orange", "yellow", "white"],
+			"card_type":	"creature",
+			"atk":	4,
+			"hp":	3,
+			"cost":	3,
+			"atk_type":	"Physical",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"Attack Immunity",
+					"value":	["Magic"]
+				}]
+		}, {
+			"name":	"Big Goblin",
+			"image_id":	4,
+			"color_palette":	["olive", "yellow", "white"],
+			"card_type":	"creature",
+			"atk":	4,
+			"hp":	7,
+			"cost":	4,
+			"atk_type":	"Physical",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"Multiple Attacks",
+					"value":	2
+				}]
+		}, {
+			"name":	"Spear Goblin",
+			"image_id":	13,
+			"color_palette":	["lime", "yellow", "white", "cyan", "brown", "gray"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	1,
+			"cost":	2,
+			"atk_type":	"Physical",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"First Strike"
+				}]
+		}, {
+			"name":	"Goblin Horn",
+			"image_id":	15,
+			"color_palette":	["white", "brown"],
+			"card_type":	"spell",
+			"cost":	4,
+			"on_cast":	7
+		}, {
+			"name":	"Goblin Chieftain",
+			"image_id":	16,
+			"color_palette":	["green", "orange", "white", "black", "red"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	4,
+			"cost":	3,
+			"atk_type":	"Physical",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"Call Kin",
+					"value":	"Goblin"
+				}]
+		}, {
+			"name":	"Mana Hoarder",
+			"image_id":	17,
+			"color_palette":	["lime", "yellow", "brown", "pink", "red", "cyan"],
+			"card_type":	"creature",
+			"atk":	2,
+			"hp":	2,
+			"cost":	3,
+			"atk_type":	"Magic",
+			"race":	["Goblin"],
+			"abilities":	[{
+					"type":	"Mana Harvest"
+				}, {
+					"type":	"Mana Generation",
+					"value":	1
+				}]
 		}, {
 			"name":	"Armored Dragon",
 			"image_id":	3,
@@ -31,17 +287,5 @@
 			"name":	"Bone Dragon",
 			"image_id":	3,
 			"color_palette":	["gray", "red"]
-		}, {
-			"name":	"Goblin",
-			"image_id":	4,
-			"color_palette":	["lime", "yellow"]
-		}, {
-			"name":	"Hobgoblin",
-			"image_id":	4,
-			"color_palette":	["orange", "yellow"]
-		}, {
-			"name":	"Goblin Shaman",
-			"image_id":	4,
-			"color_palette":	["green", "red"]
 		}]
 }

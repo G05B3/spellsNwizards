@@ -26,7 +26,17 @@ typedef enum
     DARK_GRAY  = 240,
 
     LIME       = 118,
-    BROWN      = 94
+    BROWN      = 94,
+
+    MAGENTA     = 201,
+    OLIVE = 154,
+
+    /* Light / pastel colors */
+    LIGHT_YELLOW = 230,
+    LIGHT_CYAN   = 159,
+    LIGHT_GREEN  = 157,
+    LIGHT_BLUE   = 117,
+
 } Color;
 
 
@@ -204,5 +214,53 @@ void draw4(
     const char *s3,
     Color c4,
     const char *s4);
+
+void draw5(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5);
+
+void draw6(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5,
+    Color c6,
+    const char *s6);
+
+void draw7(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5,
+    Color c6,
+    const char *s6,
+    Color c7,
+    const char *s7);
 
 #endif

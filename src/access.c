@@ -14,33 +14,6 @@
 int terminal_width = 80;
 int terminal_height = 24;
 
-
-/*=========================================================
-    ANSI Color Codes
-=========================================================*/
-
-static const int ansi_colors[] =
-{
-    30, // BLACK
-    31, // RED
-    32, // GREEN
-    33, // YELLOW
-    34, // BLUE
-    35, // MAGENTA
-    36, // CYAN
-    37, // WHITE
-
-    90, // BRIGHT_BLACK
-    91, // BRIGHT_RED
-    92, // BRIGHT_GREEN
-    93, // BRIGHT_YELLOW
-    94, // BRIGHT_BLUE
-    95, // BRIGHT_MAGENTA
-    96, // BRIGHT_CYAN
-    97  // BRIGHT_WHITE
-};
-
-
 /*=========================================================
     Color Name Lookup
 =========================================================*/
@@ -69,6 +42,12 @@ static const ColorEntry color_table[] =
     {"dark_gray", DARK_GRAY, 240},
     {"lime",      LIME,      118},
     {"brown",     BROWN,      94},
+    {"magenta",    MAGENTA,   201},
+    {"olive",     OLIVE,     154},
+    {"light_yellow", LIGHT_YELLOW, 230},
+    {"light_cyan",   LIGHT_CYAN,   159},
+    {"light_green",  LIGHT_GREEN,  157},
+    {"light_blue",   LIGHT_BLUE,   117}
 };
 
 
@@ -277,6 +256,123 @@ void draw4(
 
     set_color(c4);
     printf("%s", s4);
+
+    reset_color();
+}
+
+void draw5(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5)
+{
+    gotoxy(x, y);
+
+    set_color(c1);
+    printf("%s", s1);
+
+    set_color(c2);
+    printf("%s", s2);
+
+    set_color(c3);
+    printf("%s", s3);
+
+    set_color(c4);
+    printf("%s", s4);
+
+    set_color(c5);
+    printf("%s", s5);
+
+    reset_color();
+}
+
+void draw6(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5,
+    Color c6,
+    const char *s6)
+{
+    gotoxy(x, y);
+
+    set_color(c1);
+    printf("%s", s1);
+
+    set_color(c2);
+    printf("%s", s2);
+
+    set_color(c3);
+    printf("%s", s3);
+
+    set_color(c4);
+    printf("%s", s4);
+
+    set_color(c5);
+    printf("%s", s5);
+
+    set_color(c6);
+    printf("%s", s6);
+
+    reset_color();
+}
+
+void draw7(
+    int x,
+    int y,
+    Color c1,
+    const char *s1,
+    Color c2,
+    const char *s2,
+    Color c3,
+    const char *s3,
+    Color c4,
+    const char *s4,
+    Color c5,
+    const char *s5,
+    Color c6,
+    const char *s6,
+    Color c7,
+    const char *s7)
+{
+    gotoxy(x, y);
+
+    set_color(c1);
+    printf("%s", s1);
+
+    set_color(c2);
+    printf("%s", s2);
+
+    set_color(c3);
+    printf("%s", s3);
+
+    set_color(c4);
+    printf("%s", s4);
+
+    set_color(c5);
+    printf("%s", s5);
+
+    set_color(c6);
+    printf("%s", s6);
+
+    set_color(c7);
+    printf("%s", s7);
 
     reset_color();
 }
