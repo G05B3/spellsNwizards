@@ -133,7 +133,7 @@
 			"image_id":	12,
 			"color_palette":	["white", "red", "yellow", "lime", "blue"],
 			"card_type":	"creature",
-			"atk":	1,
+			"atk":	0,
 			"hp":	3,
 			"cost":	5,
 			"atk_type":	"Physical",
@@ -240,7 +240,7 @@
 		}, {
 			"name":	"Goblin Chieftain",
 			"image_id":	16,
-			"color_palette":	["green", "orange", "white", "black", "red"],
+			"color_palette":	["green", "orange", "white", "gray", "red"],
 			"card_type":	"creature",
 			"atk":	2,
 			"hp":	4,
