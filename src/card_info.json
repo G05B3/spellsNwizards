@@ -114,6 +114,7 @@
 			"image_id":	10,
 			"color_palette":	["red", "orange", "yellow"],
 			"card_type":	"spell",
+			"cost": 1,
 			"on_cast":	2
 		}, {
 			"name":	"Archer",
@@ -267,6 +268,12 @@
 					"type":	"Mana Generation",
 					"value":	1
 				}]
+		}, {
+			"name":	"Cursed Grove",
+			"image_id":	18,
+			"color_palette":	["dark_green", "brown", "gray", "green"],
+			"card_type":	"environment",
+			"cost": 3
 		}, {
 			"name":	"Armored Dragon",
 			"image_id":	3,

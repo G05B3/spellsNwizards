@@ -1,0 +1,10 @@
+name: Test
+front_card: Warrior
+
+10x Warrior
+10x Blue Mage
+5x Thief
+5x Knight
+5x Archer
+
+5x Embers

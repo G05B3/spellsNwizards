@@ -47,7 +47,9 @@ static const ColorEntry color_table[] =
     {"light_yellow", LIGHT_YELLOW, 230},
     {"light_cyan",   LIGHT_CYAN,   159},
     {"light_green",  LIGHT_GREEN,  157},
-    {"light_blue",   LIGHT_BLUE,   117}
+    {"light_blue",   LIGHT_BLUE,   117},
+    {"light_brown", LIGHT_BROWN, 180},
+    {"dark_green", DARK_GREEN, 22}
 };
 
 

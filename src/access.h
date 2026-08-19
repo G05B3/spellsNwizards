@@ -36,6 +36,9 @@ typedef enum
     LIGHT_CYAN   = 159,
     LIGHT_GREEN  = 157,
     LIGHT_BLUE   = 117,
+    LIGHT_BROWN = 180,
+
+    DARK_GREEN = 22
 
 } Color;
 

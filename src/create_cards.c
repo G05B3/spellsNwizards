@@ -252,7 +252,11 @@ static int valid_color(const char *s)
             "light_yellow",
             "light_cyan",
             "light_green",
-            "light_blue"};
+            "light_blue",
+            "light_brown",
+
+            "dark_green"
+        };
             
 
     const int n =
