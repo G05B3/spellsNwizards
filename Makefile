@@ -7,6 +7,7 @@ SRC_DIR = src
 CARDDB = carddb
 VIEWER = card_viewer
 DECK_BUILDER = deck_builder
+BOARD_VIEWER = board_viewer
 
 COMMON_SRC = \
     $(SRC_DIR)/cJSON.c
@@ -18,6 +19,7 @@ CARDDB_SRC = \
 VIEWER_SRC = \
     $(filter-out \
         $(SRC_DIR)/create_cards.c \
+	$(SRC_DIR)/board_viewer.c \
         $(SRC_DIR)/deck_builder.c, \
         $(wildcard $(SRC_DIR)/*.c))
 
@@ -27,8 +29,13 @@ DECK_BUILDER_SRC = \
     $(SRC_DIR)/access.c \
     $(COMMON_SRC)
 
-
-all: $(CARDDB) $(VIEWER) $(DECK_BUILDER)
+BOARD_VIEWER_SRC = \
+	$(SRC_DIR)/board_viewer.c \
+	$(SRC_DIR)/board_art.c \
+	$(SRC_DIR)/access.c \
+	$(COMMON_SRC)
+	
+all: $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER)
 
 
 $(CARDDB): $(CARDDB_SRC)
@@ -42,9 +49,11 @@ $(VIEWER): $(VIEWER_SRC)
 $(DECK_BUILDER): $(DECK_BUILDER_SRC)
 	$(CC) $(CFLAGS) $^ -o $@
 
+$(BOARD_VIEWER): $(BOARD_VIEWER_SRC)
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
-	rm -f $(CARDDB) $(VIEWER) $(DECK_BUILDER)
+	rm -f $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER)
 
 
 run: $(VIEWER)
