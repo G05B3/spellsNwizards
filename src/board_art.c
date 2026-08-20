@@ -98,6 +98,56 @@ static void draw_box(
     reset_color();
 }
 
+static void draw_box_double(
+    int x,
+    int y,
+    int width,
+    int height,
+    Color color)
+{
+    int i;
+
+    set_color(color);
+
+    /*
+        Top.
+    */
+    gotoxy(x, y);
+
+    printf("%s", TL);
+
+    for (i = 0; i < width; i++)
+        printf("%s", HZ);
+
+    printf("%s", TR);
+
+    /*
+        Sides.
+    */
+    for (i = 1; i <= height; i++)
+    {
+        gotoxy(x, y + i);
+        printf("%s", VL);
+
+        gotoxy(x + width + 1, y + i);
+        printf("%s", VL);
+    }
+
+    /*
+        Bottom.
+    */
+    gotoxy(x, y + height + 1);
+
+    printf("%s", BL);
+
+    for (i = 0; i < width; i++)
+        printf("%s", HZ);
+
+    printf("%s", BR);
+
+    reset_color();
+}
+
 
 /*=========================================================*
     Centered Label
@@ -130,47 +180,79 @@ static void draw_label(
 /*=========================================================*
     Board Row
 =========================================================*/
+/*=========================================================*
+    Main Board
+*=========================================================*/
 
 /*
-    Draws:
+    Draws the complete 2 x 5 board:
 
-        ┌─────────┬─────────┬─────────┬─────────┬─────────┐
-        │         │         │         │         │         │
-        │         │         │         │         │         │
-        └─────────┴─────────┴─────────┴─────────┴─────────┘
+        ┌─────┬─────┬─────┬─────┬─────┐
+        │     │     │     │     │     │
+        │     │     │     │     │     │
+        ├─────┼─────┼─────┼─────┼─────┤
+        │     │     │     │     │     │
+        │     │     │     │     │     │
+        └─────┴─────┴─────┴─────┴─────┘
 
-        The first slot is the artifact slot.
-        The remaining four are creature slots.
+    The first column is the artifact slot.
+    The remaining four columns are creature slots.
+
+    The middle separator is shared between the
+    opponent and player sides.
 */
-static void draw_board_row(
+
+static void draw_board_grid(
     int x,
     int y,
-    Color color)
+    Color opponent_color,
+    Color player_color)
 {
     int i;
     int j;
 
-    set_color(color);
-
     /*
-        Top.
+        ---------------------------------------------------
+        Top border
+        ---------------------------------------------------
     */
-    gotoxy(x, y);
 
+    set_color(opponent_color);
+
+    gotoxy(x, y);
     printf("%s", LTL);
 
-    for (i = 0; i < BOARD_WIDTH; i++)
-        printf("%s", LHZ);
+    for (i = 0; i < BOARD_SLOTS; i++)
+    {
+        for (j = 0; j < SLOT_WIDTH - 1; j++)
+            printf("%s", LHZ);
+
+        if (i < BOARD_SLOTS - 1)
+            printf("%s", LC1);
+    }
 
     printf("%s", LTR);
 
+
     /*
-        Vertical sides.
+        ---------------------------------------------------
+        Vertical separators — upper half
+        ---------------------------------------------------
     */
-    for (i = 1; i <= CHEIGHT + 1; i++)
+
+    for (i = 1; i < SLOT_HEIGHT; i++)
     {
         gotoxy(x, y + i);
         printf("%s", LVL);
+
+        for (j = 1; j < BOARD_SLOTS; j++)
+        {
+            gotoxy(
+                x + SLOT_WIDTH * j,
+                y + i);
+
+            printf("%s", LVL);
+        }
 
         gotoxy(
             x + BOARD_WIDTH + 1,
@@ -179,50 +261,88 @@ static void draw_board_row(
         printf("%s", LVL);
     }
 
+
     /*
-        Internal separators.
+        ---------------------------------------------------
+        Middle separator
+        ---------------------------------------------------
     */
-    for (i = 1; i < BOARD_SLOTS; i++)
+
+    set_color(player_color);
+
+    gotoxy(
+        x,
+        y + SLOT_HEIGHT);
+
+    printf("%s", LD1);
+
+    for (i = 0; i < BOARD_SLOTS; i++)
     {
-        gotoxy(
-            x + SLOT_WIDTH * i,
-            y);
+        for (j = 0; j < SLOT_WIDTH - 1; j++)
+            printf("%s", LHZ);
 
-        printf("%s", LC1);
+        if (i < BOARD_SLOTS - 1)
+            printf("%s", LCR);
+    }
 
-        gotoxy(
-            x + SLOT_WIDTH * i,
-            y + CHEIGHT + 2);
+    printf("%s", LD2);
 
-        printf("%s", LC2);
 
-        for (j = 1; j <= CHEIGHT + 1; j++)
+    /*
+        ---------------------------------------------------
+        Vertical separators — lower half
+        ---------------------------------------------------
+    */
+
+    for (i = SLOT_HEIGHT + 1;
+         i < SLOT_HEIGHT * 2;
+         i++)
+    {
+        gotoxy(x, y + i);
+        printf("%s", LVL);
+
+        for (j = 1; j < BOARD_SLOTS; j++)
         {
             gotoxy(
-                x + SLOT_WIDTH * i,
-                y + j);
+                x + SLOT_WIDTH * j,
+                y + i);
 
             printf("%s", LVL);
         }
+
+        gotoxy(
+            x + BOARD_WIDTH + 1,
+            y + i);
+
+        printf("%s", LVL);
     }
 
+
     /*
-        Bottom.
+        ---------------------------------------------------
+        Bottom border
+        ---------------------------------------------------
     */
+
     gotoxy(
         x,
-        y + CHEIGHT + 2);
+        y + SLOT_HEIGHT * 2);
 
     printf("%s", LBL);
 
-    for (i = 0; i < BOARD_WIDTH; i++)
-        printf("%s", LHZ);
+    for (i = 0; i < BOARD_SLOTS; i++)
+    {
+        for (j = 0; j < SLOT_WIDTH - 1; j++)
+            printf("%s", LHZ);
+
+        if (i < BOARD_SLOTS - 1)
+            printf("%s", LC2);
+    }
 
     printf("%s", LBR);
 
     reset_color();
 }
-
 
 /*=========================================================*
     Player Hand
@@ -239,7 +359,7 @@ static void draw_hand(
     width =
         HAND_SLOTS * SLOT_WIDTH - 1;
 
-    set_color(GREEN);
+    set_color(CYAN);
 
     /*
         Top.
@@ -323,11 +443,13 @@ static void draw_stack(
 {
     int i;
 
+    draw_box_double(x, y - 3, STACK_WIDTH, 1, MAGENTA);
+
     /*
         Label.
     */
     draw_label(
-        x,
+        x + 1,
         y - 2,
         STACK_WIDTH,
         "REACTION STACK",
@@ -344,7 +466,44 @@ static void draw_stack(
             STACK_WIDTH,
             CHEIGHT + 1,
             MAGENTA);
+        
+        if (i > 0)
+        {
+            set_color(MAGENTA);
+            gotoxy(x, y + i * SLOT_HEIGHT);
+            printf("%s", LD1);
+            gotoxy(x + STACK_WIDTH + 1, y + i * SLOT_HEIGHT);
+            printf("%s", LD2);
+        }
     }
+    reset_color();
+}
+
+/*=========================================================*
+    Event / Message Box
+*=========================================================*/
+
+/*
+    Small double-line box beside the reaction-stack header.
+
+    It spans the width of the complete 5-slot board and is
+    intended for temporary game messages later.
+
+        ╔══════════════════════════════════════════════════╗
+        ║                                                  ║
+        ╚══════════════════════════════════════════════════╝
+*/
+
+static void draw_event_box(
+    int x,
+    int y)
+{
+    draw_box_double(
+        x,
+        y,
+        BOARD_WIDTH,
+        1,
+        LIGHT_YELLOW);
 }
 
 
@@ -358,12 +517,35 @@ static void draw_round_box(
     int width,
     int height)
 {
+    set_color(GRAY);
+    for (int i = 0; i < y; i++)
+    {
+        gotoxy(x + 2, i);
+        if (i % 2 == 0)
+            printf("%s", VL);
+        else
+            printf("%s", LVL);
+
+        gotoxy(x + width - 1, i);
+        if (i % 2 == 0)
+            printf("%s", VL);
+        else
+            printf("%s", LVL);
+
+
+    }
     draw_box(
         x,
         y,
         width,
         height,
         ORANGE);
+
+    set_color(ORANGE);
+    gotoxy(x + 2, y);
+    printf("%s", LC2);
+    gotoxy(x + width - 1, y);
+    printf("%s", LC2);
 
     draw_label(
         x,
@@ -374,7 +556,7 @@ static void draw_round_box(
 
     draw_label(
         x,
-        y + 3,
+        y + 2,
         width,
         "NO. 1",
         WHITE);
@@ -526,7 +708,7 @@ void draw_board(void)
         stack_x +
         STACK_WIDTH +
         REGION_SPACING +
-        2;
+        1;
 
     info_x =
         board_x +
@@ -563,30 +745,14 @@ void draw_board(void)
         stack_x,
         opponent_y);
 
+    draw_event_box(
+        board_x - 1,
+        opponent_y - 3);
 
-    /*
-        ---------------------------------------------------
-        Opponent
-        ---------------------------------------------------
-    */
-
-    draw_board_row(
+    draw_board_grid(
         board_x-1,
         opponent_y,
-        RED);
-
-
-    /*
-        ---------------------------------------------------
-        Player
-        ---------------------------------------------------
-    */
-
-    draw_board_row(
-        board_x-1,
-        player_y-3,
-        GREEN);
-
+        WHITE, WHITE);
 
     /*
         ---------------------------------------------------
@@ -636,13 +802,24 @@ void draw_board(void)
         ---------------------------------------------------
     */
 
-    round_y = opponent_y;
+    round_y = player_y - 8;
 
     draw_round_box(
         info_x,
         round_y,
         20,
-        5);
+        2);
+
+    gotoxy(info_x, player_y - 4);
+    printf("Opponent's Side");
+    gotoxy(info_x, player_y - 3);
+    set_color(RED);
+    for (int i = 0; i < 22; i++)
+        printf("-");
+    reset_color();
+    gotoxy(info_x, player_y - 2);
+    printf("Your Side");
+
 
     draw_inspection_box(
         info_x,
