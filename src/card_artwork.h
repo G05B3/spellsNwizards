@@ -22,21 +22,6 @@ void draw_card(
     Artwork
 =========================================================*/
 
-void draw_unknown(
-    int x,
-    int y,
-    const Card *card);
-
-void draw_green_dragon(
-    int x,
-    int y,
-    const Card *card);
-
-void draw_warrior(
-    int x,
-    int y,
-    const Card *card);
-
 void draw_image(
     int x,
     int y,

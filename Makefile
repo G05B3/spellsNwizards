@@ -30,10 +30,11 @@ DECK_BUILDER_SRC = \
     $(COMMON_SRC)
 
 BOARD_VIEWER_SRC = \
-	$(SRC_DIR)/board_viewer.c \
-	$(SRC_DIR)/board_art.c \
-	$(SRC_DIR)/access.c \
-	$(COMMON_SRC)
+    $(filter-out \
+	$(SRC_DIR)/create_cards.c \
+	$(SRC_DIR)/card_viewer.c \
+	$(SRC_DIR)/deck_builder.c, \
+	$(wildcard $(SRC_DIR)/*.c))
 	
 all: $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER)
 
