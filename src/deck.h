@@ -147,4 +147,6 @@ int deck_selector(
 void free_decks(
     DeckDatabase *db);
 
+void shuffle_deck(Deck *deck);
+
 #endif 

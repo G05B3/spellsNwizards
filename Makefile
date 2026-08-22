@@ -9,6 +9,7 @@ VIEWER = card_viewer
 DECK_BUILDER = deck_builder
 BOARD_VIEWER = board_viewer
 DECK_UI = deckui
+INITIALSTATE = initialstate
 
 COMMON_SRC = \
     $(SRC_DIR)/cJSON.c
@@ -22,6 +23,7 @@ VIEWER_SRC = \
         $(SRC_DIR)/create_cards.c \
 	$(SRC_DIR)/board_viewer.c \
 	$(SRC_DIR)/deck_ui.c \
+	$(SRC_DIR)/initial_state.c \
         $(SRC_DIR)/deck_builder.c, \
         $(wildcard $(SRC_DIR)/*.c))
 
@@ -36,6 +38,7 @@ BOARD_VIEWER_SRC = \
 	$(SRC_DIR)/create_cards.c \
 	$(SRC_DIR)/card_viewer.c \
 	$(SRC_DIR)/deck_ui.c \
+	$(SRC_DIR)/initial_state.c \
 	$(SRC_DIR)/deck_builder.c, \
 	$(wildcard $(SRC_DIR)/*.c))
 	
@@ -43,11 +46,21 @@ DECK_UI_SRC = \
     $(filter-out \
         $(SRC_DIR)/create_cards.c \
 	$(SRC_DIR)/board_viewer.c \
+	$(SRC_DIR)/initial_state.c \
 		$(SRC_DIR)/card_viewer.c \
         $(SRC_DIR)/deck_builder.c, \
         $(wildcard $(SRC_DIR)/*.c))
 
-all: $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER) $(DECK_UI)
+INITIALSTATE_SRC = \
+	$(filter-out \
+		$(SRC_DIR)/create_cards.c \
+	$(SRC_DIR)/board_viewer.c \
+		$(SRC_DIR)/card_viewer.c \
+        $(SRC_DIR)/deck_builder.c \
+		$(SRC_DIR)/deck_ui.c, \
+        $(wildcard $(SRC_DIR)/*.c))
+
+all: $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER) $(DECK_UI) $(INITIALSTATE)
 
 
 $(CARDDB): $(CARDDB_SRC)
@@ -67,8 +80,11 @@ $(BOARD_VIEWER): $(BOARD_VIEWER_SRC)
 $(DECK_UI): $(DECK_UI_SRC)
 	$(CC) $(CLFAGS) $^ -o $@
 
+$(INITIALSTATE): $(INITIALSTATE_SRC)
+	$(CC) $(CLFAGS) $^ -o $@
+
 clean:
-	rm -f $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER) $(DECK_UI)
+	rm -f $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER) $(DECK_UI) $(INITIALSTATE)
 
 
 run: $(VIEWER)

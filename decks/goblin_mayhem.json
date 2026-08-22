@@ -1,0 +1,17 @@
+{
+	"name":	"Goblin Mayhem",
+	"front_card":	"Goblin",
+	"cards":	["Goblin", "Goblin", "Goblin", 
+	"Hobgoblin", "Hobgoblin", "Hobgoblin", 
+	"Spear Goblin", "Spear Goblin", "Spear Goblin", 
+	"Goblin Shaman", "Goblin Shaman", "Goblin Shaman", 
+	"Big Goblin", "Big Goblin", "Big Goblin", 
+	"Goblin Chieftain", "Goblin Chieftain", "Goblin Chieftain", 
+	"Mana Hoarder", "Mana Hoarder", "Mana Hoarder",
+	"Goblin Horn", "Goblin Horn", "Goblin Horn",
+	"King", "King", "King",
+	"Soldier", "Soldier", "Soldier",
+	"Embers", "Embers", "Embers",
+	"Nature's Blessing", "Nature's Blessing", "Nature's Blessing",
+	"Armored Dragon", "Armored Dragon", "Snow Storm", "Cursed Grove"]
+}

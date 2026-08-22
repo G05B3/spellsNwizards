@@ -13,6 +13,20 @@
 #include "cJSON.h"
 
 
+void shuffle_deck(Deck *deck)
+{
+    int i;
+
+    for (i = DECK_SIZE - 1; i > 0; i--)
+    {
+        int j = rand() % (i + 1);
+
+        Card *temp = deck->cards[i];
+        deck->cards[i] = deck->cards[j];
+        deck->cards[j] = temp;
+    }
+}
+
 /*=========================================================
     Internal Helpers
 =========================================================*/
