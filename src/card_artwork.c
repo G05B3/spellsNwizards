@@ -72,7 +72,7 @@ void draw_card(
 
     Color outline_color;
 
-    if (card->card_type == CARD_ENVIRONMENT)
+    if (card->card_type == CARD_ENVIRONMENT || card->card_type == CARD_NONE)
         outline_color = card->palette[0];
     else
         outline_color = CARD_TYPE_COLORS[card->card_type];
@@ -96,94 +96,97 @@ void draw_card(
         Cost
     */
 
-    set_color(outline_color);
-
-    gotoxy(x + CLENGTH + 2, y);
-
-    printf(TL HZ HZ TR);
-
-    gotoxy(x + CLENGTH + 2, y + 1);
-
-    printf(VL "  " VL);
-
-    gotoxy(x + CLENGTH + 2, y + 2);
-
-    printf(BL HZ HZ BR);
-
-    draw_text(
-        x + CLENGTH + 3,
-        y + 1,
-        CYAN,
-        "%2d",
-        card->cost);
-
-    reset_color();
-
-    /*
-        Creature stats
-
-        Replace condition later by
-
-            card->isCreature
-    */
-
-    if (card->card_type == CARD_CREATURE)
+    if (card->card_type != CARD_NONE)
     {
-        /*
-            Attack
-        */
-
         set_color(outline_color);
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT - 4);
+        gotoxy(x + CLENGTH + 2, y);
 
         printf(TL HZ HZ TR);
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT - 3);
+        gotoxy(x + CLENGTH + 2, y + 1);
 
         printf(VL "  " VL);
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT - 2);
+        gotoxy(x + CLENGTH + 2, y + 2);
 
         printf(BL HZ HZ BR);
 
         draw_text(
             x + CLENGTH + 3,
-            y + CHEIGHT - 3,
-            ATK_TYPE_COLORS[card->atk_type],
+            y + 1,
+            CYAN,
             "%2d",
-            card->atk);
+            card->cost);
+
+        reset_color();
 
         /*
-            HP
+            Creature stats
+
+            Replace condition later by
+
+                card->isCreature
         */
 
-        set_color(outline_color);
+        if (card->card_type == CARD_CREATURE)
+        {
+            /*
+                Attack
+            */
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT - 1);
+            set_color(outline_color);
 
-        printf(TL HZ HZ TR);
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT - 4);
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT);
+            printf(TL HZ HZ TR);
 
-        printf(VL "  " VL);
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT - 3);
 
-        gotoxy(x + CLENGTH + 2,
-               y + CHEIGHT + 1);
+            printf(VL "  " VL);
 
-        printf(BL HZ HZ BR);
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT - 2);
 
-        draw_text(
-            x + CLENGTH + 3,
-            y + CHEIGHT,
-            GREEN,
-            "%2d",
-            card->hp);
+            printf(BL HZ HZ BR);
+
+            draw_text(
+                x + CLENGTH + 3,
+                y + CHEIGHT - 3,
+                ATK_TYPE_COLORS[card->atk_type],
+                "%2d",
+                card->atk);
+
+            /*
+                HP
+            */
+
+            set_color(outline_color);
+
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT - 1);
+
+            printf(TL HZ HZ TR);
+
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT);
+
+            printf(VL "  " VL);
+
+            gotoxy(x + CLENGTH + 2,
+                   y + CHEIGHT + 1);
+
+            printf(BL HZ HZ BR);
+
+            draw_text(
+                x + CLENGTH + 3,
+                y + CHEIGHT,
+                GREEN,
+                "%2d",
+                card->hp);
+        }
     }
 
     /*
@@ -672,6 +675,29 @@ void draw_grove(
 }
 
 /*=========================================================
+    Snow Storm
+=========================================================*/
+
+void draw_snow(
+    int x,
+    int y,
+    const Card *card)
+{
+    const Color *p = card->palette;
+
+    draw3(x + 1, y + 3, p[1], "*       ", p[2], ".        ", p[1], "*");
+    draw3(x + 1, y + 4, p[2], "    .    ", p[3], "*    ", p[2], ".");
+    draw(x + 1, y + 5, p[1], "        *       ", p[2], ".");
+    draw3(x + 1, y + 6, p[3], "   *    ", p[2], ".      ", p[1], "*");
+    draw(x + 1, y + 7, p[2], "       .     ", p[1], "*     *");
+    draw3(x + 1, y + 8, p[2], "  .       ", p[3], "*       ", p[2], ".");
+    draw(x + 1, y + 9, p[1], "       *       ", p[2], ".  ");
+    draw3(x + 1, y + 10, p[1], "*       ", p[2], ".      ", p[3], "*   ");
+    draw3(x + 1, y + 11, p[2], "   .   ", p[3], "*       ", p[2], ".");
+    draw(x + 1, y + 12, p[2], "       .      ", p[1], "* ");
+}
+
+/*=========================================================
     Dispatcher
 =========================================================*/
 
@@ -769,6 +795,10 @@ void draw_image(
 
     case 18:
         draw_grove(x, y, card);
+        break;
+
+    case 19:
+        draw_snow(x, y, card);
         break;
 
     default:

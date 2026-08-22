@@ -145,9 +145,6 @@ static void draw_label(
 }
 
 /*=========================================================*
-    Board Row
-=========================================================*/
-/*=========================================================*
     Main Board
 *=========================================================*/
 
@@ -520,14 +517,12 @@ static void draw_stack(
 
 static void draw_event_box(
     int x,
-    int y)
+    int y, Color* c)
 {
-    draw_box_double(
-        x,
-        y,
-        BOARD_WIDTH,
-        1,
-        LIGHT_YELLOW);
+    if (c == NULL)
+        draw_box_double(x, y, BOARD_WIDTH, 1, LIGHT_YELLOW);
+    else
+        draw_box_double(x, y, BOARD_WIDTH, 1, *c);
 }
 
 /*=========================================================*
@@ -701,7 +696,7 @@ static void draw_inspection_box(
     Main Board
 =========================================================*/
 
-void draw_board(void)
+void draw_board(Color* c)
 {
     int stack_x;
     int board_x;
@@ -764,12 +759,12 @@ void draw_board(void)
 
     draw_event_box(
         board_x - 1,
-        opponent_y - 3);
+        opponent_y - 3, c);
 
-    draw_board_grid(
-        board_x - 1,
-        opponent_y,
-        WHITE, WHITE);
+    if (c == NULL)
+        draw_board_grid(board_x - 1, opponent_y, WHITE, WHITE);
+    else
+        draw_board_grid(board_x - 1, opponent_y, *c, *c);
 
     /*
         ---------------------------------------------------

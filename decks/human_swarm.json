@@ -1,5 +1,5 @@
 {
 	"name":	"Human Swarm",
-	"front_card":	8,
+	"front_card":	"Commander",
 	"cards":	["Warrior", "Warrior", "Warrior", "Blue Mage", "Blue Mage", "Blue Mage", "White Mage", "White Mage", "White Mage", "Soldier", "Soldier", "Soldier", "Thief", "Thief", "Thief", "Commander", "Commander", "Commander", "Knight", "Knight", "Knight", "Archer", "Archer", "Archer", "King", "King", "King", "Dragonslayer", "Dragonslayer", "Dragonslayer", "Embers", "Embers", "Embers", "Nature's Blessing", "Nature's Blessing", "Nature's Blessing", "Armored Dragon", "Armored Dragon", "Armored Dragon", "Cursed Grove"]
 }

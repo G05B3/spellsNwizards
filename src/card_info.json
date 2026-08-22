@@ -114,7 +114,7 @@
 			"image_id":	10,
 			"color_palette":	["red", "orange", "yellow"],
 			"card_type":	"spell",
-			"cost": 1,
+			"cost":	1,
 			"on_cast":	2
 		}, {
 			"name":	"Archer",
@@ -273,7 +273,18 @@
 			"image_id":	18,
 			"color_palette":	["dark_green", "brown", "gray", "green"],
 			"card_type":	"environment",
-			"cost": 3
+			"cost":	3
+		}, {
+			"name":	"Snow Storm",
+			"image_id":	19,
+			"color_palette":	["cyan", "light_blue", "light_cyan", "white"],
+			"card_type":	"environment",
+			"atk":	0,
+			"hp":	0,
+			"cost":	5,
+			"atk_type":	"None",
+			"race":	[],
+			"abilities":	[]
 		}, {
 			"name":	"Armored Dragon",
 			"image_id":	3,

@@ -24,6 +24,7 @@ typedef enum
     CARD_CREATURE,
     CARD_ARTIFACT,
     CARD_ENVIRONMENT,
+    CARD_NONE,
     CARD_TYPE_COUNT
 } CardType;
 

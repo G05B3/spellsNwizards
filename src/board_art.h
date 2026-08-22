@@ -100,6 +100,6 @@ extern BoardPosition environment_slot;
     Board Drawing
 =========================================================*/
 
-void draw_board(void);
+void draw_board(Color* c);
 
 #endif

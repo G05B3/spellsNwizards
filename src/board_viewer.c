@@ -22,7 +22,7 @@ int main(void)
         return 1;
     }
 
-    draw_board();
+    draw_board(NULL);
 
     gotoxy(1, terminal_height);
 
@@ -32,13 +32,16 @@ int main(void)
        for (int i = 0; i < 5; i++)
             draw_card(board_slots[j][i].x, board_slots[j][i].y, &(db.cards[i]));
 
-    draw_card(environment_slot.x, environment_slot.y, &(db.cards[20]));
+    draw_card(environment_slot.x, environment_slot.y, &(db.cards[21]));
 
     for (int i = 0; i < 4; i++)
         draw_card(hand_slots[i].x, hand_slots[i].y, &(db.cards[10 + i]));
 
     for (int i = 0; i < 3; i++)
         draw_card(stack_slots[i].x, stack_slots[i].y, &(db.cards[15 + i]));
+
+    getchar();
+    draw_board(&(db.cards[21].palette[0]));
 
     show_cursor();
     reset_color();
