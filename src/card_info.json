@@ -279,31 +279,176 @@
 			"image_id":	19,
 			"color_palette":	["cyan", "light_blue", "light_cyan", "white"],
 			"card_type":	"environment",
+			"cost":	5
+		}, {
+			"name":	"Skeleton",
+			"image_id":	20,
+			"color_palette":	["gray"],
+			"card_type":	"creature",
+			"atk":	1,
+			"hp":	4,
+			"cost":	1,
+			"atk_type":	"Physical",
+			"race":	["Undead"],
+			"abilities":	[{
+					"type":	"Attack Immunity",
+					"value":	["Physical"]
+				}],
+			"on_cast":	4
+		}, {
+			"name":	"Graveyard",
+			"image_id":	21,
+			"color_palette":	["gray", "white", "green"],
+			"card_type":	"environment",
+			"cost":	3
+		}, {
+			"name":	"Skeleton Mage",
+			"image_id":	1,
+			"color_palette":	["purple", "magenta", "gray"],
+			"card_type":	"creature",
+			"atk":	3,
+			"hp":	7,
+			"cost":	2,
+			"atk_type":	"Magic",
+			"race":	["Undead"],
+			"abilities":	[{
+					"type":	"Healer"
+				}, {
+					"type":	"Attack Immunity",
+					"value":	["Physical"]
+				}],
+			"on_cast":	4
+		}, {
+			"name":	"Amnesia",
+			"image_id":	22,
+			"color_palette":	["gray"],
+			"card_type":	"spell",
+			"cost":	3,
+			"on_cast":	6
+		}, {
+			"name":	"Mind Mist",
+			"image_id":	23,
+			"color_palette":	["gray"],
+			"card_type":	"spell",
+			"cost":	3,
+			"on_cast":	6
+		}, {
+			"name":	"Vampire",
+			"image_id":	24,
+			"color_palette":	["cyan", "red", "white"],
+			"card_type":	"creature",
+			"atk":	3,
+			"hp":	3,
+			"cost":	3,
+			"atk_type":	"Physical",
+			"race":	["Undead"],
+			"abilities":	[{
+					"type":	"Vampirism"
+				}]
+		}, {
+			"name":	"Vampiric Rite",
+			"image_id":	26,
+			"color_palette":	["red", "white"],
+			"card_type":	"spell",
 			"atk":	0,
 			"hp":	0,
-			"cost":	5,
+			"cost":	3,
 			"atk_type":	"None",
 			"race":	[],
-			"abilities":	[]
+			"abilities":	[],
+			"on_cast":	8
+		}, {
+			"name":	"Lightning Bolt",
+			"image_id":	25,
+			"color_palette":	["gray", "yellow"],
+			"card_type":	"spell",
+			"cost":	1,
+			"on_cast":	9
 		}, {
 			"name":	"Armored Dragon",
 			"image_id":	3,
-			"color_palette":	["green", "yellow"]
+			"color_palette":	["green", "yellow"],
+			"card_type":	"creature",
+			"atk":	8,
+			"hp":	8,
+			"cost":	7,
+			"atk_type":	"Physical",
+			"race":	["Dragon"],
+			"abilities":	[{
+					"type":	"Berserk",
+					"value":	3
+				}, {
+					"type":	"Attack Immunity",
+					"value":	["Physical"]
+				}],
+			"on_cast":	4
 		}, {
 			"name":	"Flaming Dragon",
 			"image_id":	3,
-			"color_palette":	["red", "yellow"]
+			"color_palette":	["red", "orange"],
+			"card_type":	"creature",
+			"atk":	4,
+			"hp":	8,
+			"cost":	7,
+			"atk_type":	"Magic",
+			"race":	["Dragon"],
+			"abilities":	[{
+					"type":	"Berserk",
+					"value":	1
+				}, {
+					"type":	"Status Immunity",
+					"value":	["Burn"]
+				}, {
+					"type":	"Flammable",
+					"value":	8
+				}]
 		}, {
 			"name":	"Wise Dragon",
 			"image_id":	3,
-			"color_palette":	["blue", "magenta"]
+			"color_palette":	["blue", "magenta"],
+			"card_type":	"creature",
+			"atk":	4,
+			"hp":	6,
+			"cost":	7,
+			"atk_type":	"Magic",
+			"race":	["Dragon"],
+			"abilities":	[],
+			"on_cast":	5,
+			"on_death":	6
 		}, {
 			"name":	"Ancient Dragon",
 			"image_id":	3,
-			"color_palette":	["white", "blue"]
+			"color_palette":	["white", "blue"],
+			"card_type":	"creature",
+			"atk":	10,
+			"hp":	10,
+			"cost":	8,
+			"atk_type":	"Void",
+			"race":	["Dragon"],
+			"abilities":	[{
+					"type":	"Berserk",
+					"value":	2
+				}]
 		}, {
 			"name":	"Bone Dragon",
 			"image_id":	3,
-			"color_palette":	["gray", "red"]
+			"color_palette":	["gray", "red"],
+			"card_type":	"creature",
+			"atk":	10,
+			"hp":	20,
+			"cost":	6,
+			"atk_type":	"Physical",
+			"race":	["Dragon", "Undead"],
+			"abilities":	[{
+					"type":	"Poison Tip",
+					"value":	3
+				}, {
+					"type":	"Attack Immunity",
+					"value":	["Physical"]
+				}, {
+					"type":	"Berserk",
+					"value":	4
+				}],
+			"on_cast":	4
 		}]
 }
