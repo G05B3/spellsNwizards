@@ -81,7 +81,7 @@ $(DECK_UI): $(DECK_UI_SRC)
 	$(CC) $(CLFAGS) $^ -o $@
 
 $(INITIALSTATE): $(INITIALSTATE_SRC)
-	$(CC) $(CLFAGS) $^ -o $@
+	$(CC) $(CLFAGS) -g $^ -o $@
 
 clean:
 	rm -f $(CARDDB) $(VIEWER) $(DECK_BUILDER) $(BOARD_VIEWER) $(DECK_UI) $(INITIALSTATE)

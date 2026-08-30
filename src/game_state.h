@@ -92,5 +92,8 @@ int cast_card(
     GameState *game,
     int player_index);
 
+int main_phase(
+    GameState *game,
+    int player_index);
 
 #endif

@@ -260,7 +260,7 @@ static int parse_deck_input(
             Deck name
         -------------------------------------------------*/
 
-        if (!strncasecmp(
+        if (!strncmp(
                 text,
                 "name:",
                 5))
@@ -282,7 +282,7 @@ static int parse_deck_input(
             Front card
         -------------------------------------------------*/
 
-        if (!strncasecmp(
+        if (!strncmp(
                 text,
                 "front_card:",
                 11))

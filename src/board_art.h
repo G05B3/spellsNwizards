@@ -15,7 +15,7 @@
 
 
 #define CREATURE_SLOTS 4
-#define HAND_SLOTS 4
+#define HAND_SLOTS 5
 #define STACK_SLOTS 3
 
 #define REGION_SPACING 2
@@ -101,5 +101,15 @@ extern BoardPosition environment_slot;
 =========================================================*/
 
 void draw_board(Color* c);
+void write_event(
+    const char *text);
+
+void draw_players_info(
+    const char *player_one_name,
+    int player_one_hp,
+    int player_one_mana,
+    const char *player_two_name,
+    int player_two_hp,
+    int player_two_mana);
 
 #endif

@@ -2,16 +2,17 @@
 #define PLAYER_H
 
 #include "deck.h"
+#include "board_art.h"
 
 /*=========================================================
     Constants
 =========================================================*/
 
 #define MAX_PLAYER_NAME 256
-#define MAX_HAND_SIZE   4
+#define MAX_HAND_SIZE  HAND_SLOTS
 
 #define PLAYER_STARTING_HP    20
-#define PLAYER_STARTING_MANA   0
+#define PLAYER_STARTING_MANA   100
 
 
 /*=========================================================

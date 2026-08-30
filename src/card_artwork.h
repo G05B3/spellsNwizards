@@ -17,6 +17,11 @@ void draw_card(
     int y,
     const Card *card);
 
+void delete_card(
+    int x,
+    int y
+);
+
 
 /*=========================================================
     Artwork

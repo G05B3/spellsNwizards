@@ -1,3 +1,5 @@
+#define _DEFAULT_SOURCE
+
 #include "selection.h"
 
 #include <stdio.h>
@@ -6,7 +8,6 @@
 
 #include "access.h"
 #include "card_artwork.h"
-
 
 /*=========================================================
     Terminal Input
@@ -46,25 +47,25 @@ static int read_key(void)
 
             switch (c3)
             {
-                case 'A':
-                    c = 'w';
-                    break;
+            case 'A':
+                c = 'w';
+                break;
 
-                case 'B':
-                    c = 's';
-                    break;
+            case 'B':
+                c = 's';
+                break;
 
-                case 'C':
-                    c = 'd';
-                    break;
+            case 'C':
+                c = 'd';
+                break;
 
-                case 'D':
-                    c = 'a';
-                    break;
+            case 'D':
+                c = 'a';
+                break;
 
-                default:
-                    c = 27;
-                    break;
+            default:
+                c = 27;
+                break;
             }
         }
     }
@@ -77,7 +78,6 @@ static int read_key(void)
     return c;
 }
 
-
 /*=========================================================
     Selection
 =========================================================*/
@@ -89,19 +89,19 @@ int select_target(
     int current = 0;
     int key;
 
-    if (options == NULL ||
-        option_count <= 0)
-    {
-        return -1;
-    }
+    if (options == NULL && option_count > 0)
+        return SELECT_CANCEL;
 
     /*
         Initial hover.
     */
-    draw_outline(
-        options[current].position.x,
-        options[current].position.y,
-        HOVER_COLOR);
+    if (option_count > 0)
+    {
+        draw_outline(
+            options[current].position.x,
+            options[current].position.y,
+            HOVER_COLOR);
+    }
 
     while (1)
     {
@@ -109,66 +109,62 @@ int select_target(
 
         /*
             ------------------------------------------------
-            Move left / right
+            Pass phase
             ------------------------------------------------
         */
 
-        if (key == 'a')
+        if (key == 'p' || key == 'P')
         {
-            if (current > 0)
-            {
-                /*
-                    Restore previous outline.
-                */
-                draw_outline(
-                    options[current].position.x,
-                    options[current].position.y,
-                    options[current].normal_color);
-
-                current--;
-
-                /*
-                    Draw new hover.
-                */
-                draw_outline(
-                    options[current].position.x,
-                    options[current].position.y,
-                    HOVER_COLOR);
-            }
-        }
-
-        else if (key == 'd')
-        {
-            if (current < option_count - 1)
+            if (option_count > 0)
             {
                 draw_outline(
                     options[current].position.x,
                     options[current].position.y,
                     options[current].normal_color);
-
-                current++;
-
-                draw_outline(
-                    options[current].position.x,
-                    options[current].position.y,
-                    HOVER_COLOR);
             }
+
+            return SELECT_PASS;
         }
 
         /*
             ------------------------------------------------
-            Up / down
-
-            For now, these are aliases for left/right
-            because the first selection pool (hand) is
-            horizontal.
-
-            The generic selector can be extended later when
-            we have 2D option pools.
+            Cancel
             ------------------------------------------------
         */
 
-        else if (key == 'w')
+        if (key == 27)
+        {
+            if (option_count > 0)
+            {
+                draw_outline(
+                    options[current].position.x,
+                    options[current].position.y,
+                    options[current].normal_color);
+            }
+
+            return SELECT_CANCEL;
+        }
+
+        /*
+            ------------------------------------------------
+            No selectable options
+            ------------------------------------------------
+
+            There is nothing else to do. Keep waiting for
+            an interrupt such as P.
+            ------------------------------------------------
+        */
+
+        if (option_count == 0)
+            continue;
+
+        /*
+            ------------------------------------------------
+            Normal selection
+            ------------------------------------------------
+        */
+
+        if (key == 'a' || key == 'A')
         {
             if (current > 0)
             {
@@ -186,7 +182,7 @@ int select_target(
             }
         }
 
-        else if (key == 's')
+        else if (key == 'd' || key == 'D')
         {
             if (current < option_count - 1)
             {
@@ -204,11 +200,41 @@ int select_target(
             }
         }
 
-        /*
-            ------------------------------------------------
-            Select
-            ------------------------------------------------
-        */
+        else if (key == 'w' || key == 'W')
+        {
+            if (current > 0)
+            {
+                draw_outline(
+                    options[current].position.x,
+                    options[current].position.y,
+                    options[current].normal_color);
+
+                current--;
+
+                draw_outline(
+                    options[current].position.x,
+                    options[current].position.y,
+                    HOVER_COLOR);
+            }
+        }
+
+        else if (key == 's' || key == 'S')
+        {
+            if (current < option_count - 1)
+            {
+                draw_outline(
+                    options[current].position.x,
+                    options[current].position.y,
+                    options[current].normal_color);
+
+                current++;
+
+                draw_outline(
+                    options[current].position.x,
+                    options[current].position.y,
+                    HOVER_COLOR);
+            }
+        }
 
         else if (key == '\n' ||
                  key == '\r')
@@ -220,31 +246,12 @@ int select_target(
 
             usleep(500000);
 
-            /*
-                Restore normal outline before returning.
-            */
             draw_outline(
                 options[current].position.x,
                 options[current].position.y,
                 options[current].normal_color);
 
             return current;
-        }
-
-        /*
-            ------------------------------------------------
-            Cancel
-            ------------------------------------------------
-        */
-
-        else if (key == 27)
-        {
-            draw_outline(
-                options[current].position.x,
-                options[current].position.y,
-                options[current].normal_color);
-
-            return -1;
         }
     }
 }

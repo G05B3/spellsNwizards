@@ -1,6 +1,7 @@
 #include "board_art.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "access.h"
 
@@ -12,6 +13,9 @@ BoardPosition board_slots[2][BOARD_SLOTS];
 BoardPosition hand_slots[HAND_SLOTS];
 BoardPosition stack_slots[STACK_SLOTS];
 BoardPosition environment_slot;
+
+static int event_x;
+static int event_y;
 
 /*=========================================================*
     Generic Box
@@ -500,6 +504,65 @@ static void draw_stack(
     reset_color();
 }
 
+void draw_players_info(
+    const char *player_one_name,
+    int player_one_hp,
+    int player_one_mana,
+    const char *player_two_name,
+    int player_two_hp,
+    int player_two_mana)
+{
+    int x = 2;
+    int y = 4 * SLOT_HEIGHT - 4;
+
+    if (player_one_name == NULL || player_two_name == NULL)
+    {
+        draw_box_double(
+            x,
+            y,
+            SLOT_WIDTH,
+            3,
+            LIGHT_YELLOW);
+
+        return;
+    }
+
+    /*
+        Adjust these dimensions/position to wherever your
+        player information box is located.
+    */
+    draw_box_double(
+        x,
+        y,
+        SLOT_WIDTH,
+        3,
+        LIGHT_YELLOW);
+
+    /*
+        Player one.
+    */
+    draw_text(
+        x + 2,
+        y + 1,
+        WHITE,
+        "%s  HP: %d  Mana: %d",
+        player_one_name,
+        player_one_hp,
+        player_one_mana);
+
+    /*
+        Player two.
+    */
+    draw_text(
+        x + 2, 
+        y + 3,
+        WHITE,
+        "%s  HP: %d  Mana: %d",
+        player_two_name,
+        player_two_hp,
+        player_two_mana);
+}
+
 /*=========================================================*
     Event / Message Box
 *=========================================================*/
@@ -523,6 +586,50 @@ static void draw_event_box(
         draw_box_double(x, y, BOARD_WIDTH, 1, LIGHT_YELLOW);
     else
         draw_box_double(x, y, BOARD_WIDTH, 1, *c);
+}
+
+void write_event(
+    const char *text)
+{
+    char buffer[BOARD_WIDTH + 1];
+    int text_length;
+    int x;
+
+    if (text == NULL)
+        return;
+
+    memset(
+        buffer,
+        ' ',
+        BOARD_WIDTH);
+
+    buffer[BOARD_WIDTH] = '\0';
+
+    /*
+        Clear event-box contents.
+    */
+    draw_line(
+        event_x + 1,
+        event_y + 1,
+        LIGHT_YELLOW,
+        buffer);
+
+    text_length = strlen(text);
+
+    if (text_length > BOARD_WIDTH)
+        text_length = BOARD_WIDTH;
+
+    x = event_x + 1 +
+        (BOARD_WIDTH - text_length) / 2;
+
+    /*
+        Draw centered event.
+    */
+    draw_line(
+        x,
+        event_y + 1,
+        LIGHT_YELLOW,
+        text);
 }
 
 /*=========================================================*
@@ -778,7 +885,7 @@ void draw_board(Color* c)
     */
 
     draw_hand(
-        board_x + SLOT_WIDTH - 1,
+        board_x + SLOT_WIDTH - SLOT_WIDTH - 1,
         hand_y - 4);
 
     /*
@@ -875,7 +982,7 @@ void draw_board(Color* c)
     {
         hand_slots[i].x =
             board_x + SLOT_WIDTH
-            + SLOT_WIDTH * i;
+            + SLOT_WIDTH * (i-1);
 
         hand_slots[i].y =
             hand_y - 3;
@@ -905,4 +1012,9 @@ void draw_board(Color* c)
 
     environment_slot.y =
         opponent_y + 1;
+
+    event_x = board_x - 1;
+    event_y = opponent_y - 3;
+
+    draw_players_info(NULL, 0, 0, NULL, 0, 0);
 }

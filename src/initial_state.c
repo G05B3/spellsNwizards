@@ -129,9 +129,9 @@ int main(void)
     */
     draw_cards_to_hand(
         &((&game)->players[0]),
-        4);
+        3);
 
-    cast_card((&game), 0);
+    main_phase(&game, 0);
 
     /*
         Keep terminal open.

@@ -1160,7 +1160,7 @@ static int parse_arguments(
 
 static void append_card_to_database(
     cJSON *root,
-    const ParsedArguments *args)
+    ParsedArguments *args)
 {
     cJSON *cards =
         cJSON_GetObjectItem(root, "cards");

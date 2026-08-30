@@ -2,6 +2,7 @@
 #define SELECTION_H
 
 #include <unistd.h>
+#include "access.h"
 #include "board_art.h"
 
 /*=========================================================
@@ -11,6 +12,8 @@
 #define HOVER_COLOR      LIGHT_GREEN
 #define SELECTION_COLOR  RED
 
+#define SELECT_CANCEL  (-1)
+#define SELECT_PASS    (-2)
 
 /*=========================================================
     Selection Option
@@ -25,6 +28,9 @@ typedef struct
         Used to restore the outline when the cursor moves.
     */
     Color normal_color;
+
+    // Actual slot represent by this option
+    int index;
 
 } SelectionOption;
 

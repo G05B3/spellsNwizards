@@ -57,6 +57,7 @@ void draw_outline(
     printf(BR);
 
     reset_color();
+    fflush(stdout);
 }
 
 /*-------------------------------------------------------*/
@@ -192,6 +193,18 @@ void draw_card(
     */
 
     draw_image(x, y, card);
+}
+
+void delete_card(int x, int y)
+{
+    int i, j;
+
+    for (i = 0; i < CHEIGHT + 2; i++)
+    {
+        gotoxy(x, y + i);
+        for (j = 0; j < CLENGTH + 6; j++)
+            printf(" ");
+    }
 }
 
 /*=========================================================
