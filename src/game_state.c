@@ -458,3 +458,89 @@ int main_phase(
 
     return 1;
 }
+
+int attack(
+    GameState *game,
+    int attacker_player,
+    int attacker_slot,
+    int target_player,
+    int target_slot)
+{
+    CardInstance *attacker;
+    CardInstance *target;
+
+    if (game == NULL)
+        return 0;
+
+    if (attacker_player < 0 ||
+        attacker_player >= PLAYER_COUNT ||
+        target_player < 0 ||
+        target_player >= PLAYER_COUNT)
+    {
+        return 0;
+    }
+
+    if (attacker_slot < FIRST_CREATURE_SLOT ||
+        attacker_slot >= BOARD_SLOTS ||
+        target_slot < FIRST_CREATURE_SLOT ||
+        target_slot >= BOARD_SLOTS)
+    {
+        return 0;
+    }
+
+    attacker =
+        &game->board.cards[attacker_player][attacker_slot];
+
+    target =
+        &game->board.cards[target_player][target_slot];
+
+    /*
+        Both positions must contain active creatures.
+    */
+    if (!attacker->active ||
+        !target->active)
+    {
+        return 0;
+    }
+
+    if (attacker->card->card_type != CARD_CREATURE ||
+        target->card->card_type != CARD_CREATURE)
+    {
+        return 0;
+    }
+
+    /*
+        The attacker must still have an attack available.
+    */
+    if (attacker->attacks_remaining <= 0)
+        return 0;
+
+    /*
+        Basic combat resolution.
+
+        For now both creatures deal their ATK
+        simultaneously.
+    */
+    target->hp -= attacker->atk;
+    attacker->hp -= target->atk;
+
+    /*
+        Consume one attack.
+    */
+    attacker->attacks_remaining--;
+
+    /*
+        Redraw both cards using their runtime state.
+    */
+    draw_cardInstance(
+        board_slots[attacker_player][attacker_slot].x,
+        board_slots[attacker_player][attacker_slot].y,
+        attacker);
+
+    draw_cardInstance(
+        board_slots[target_player][target_slot].x,
+        board_slots[target_player][target_slot].y,
+        target);
+
+    return 1;
+}

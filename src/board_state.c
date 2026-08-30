@@ -1,5 +1,7 @@
+#include "card_artwork.h"
 #include "board_state.h"
 
+#include <stdio.h>
 #include <string.h>
 
 
@@ -31,6 +33,7 @@ void init_card_instance(
 
     instance->atk = card->atk;
     instance->hp  = card->hp;
+    instance->attacks_remaining = card->multiple_attacks;
 
 
     /*-----------------------------------------------------*
@@ -277,4 +280,179 @@ Card *peek_graveyard(
     return board->graveyard.cards[
         board->graveyard.count - 1
     ];
+}
+
+void draw_cardInstance(
+    int x,
+    int y,
+    const CardInstance *instance)
+{
+    const Card *card;
+    int len;
+    Color outline_color;
+
+    if (instance == NULL ||
+        instance->card == NULL)
+    {
+        return;
+    }
+
+    card = instance->card;
+
+    /*
+        Determine outline color exactly as draw_card().
+    */
+    if (card->card_type == CARD_ENVIRONMENT ||
+        card->card_type == CARD_NONE)
+    {
+        outline_color = card->palette[0];
+    }
+    else
+    {
+        outline_color =
+            CARD_TYPE_COLORS[card->card_type];
+    }
+
+    draw_outline(
+        x,
+        y,
+        outline_color);
+
+    /*
+        Card name
+    */
+    len = strlen(card->name);
+
+    draw_text(
+        x + CLENGTH / 2 - len / 2 + 1,
+        y + 1,
+        WHITE,
+        "%s",
+        card->name);
+
+    /*
+        Cost
+    */
+    if (card->card_type != CARD_NONE)
+    {
+        set_color(outline_color);
+
+        gotoxy(
+            x + CLENGTH + 2,
+            y);
+
+        printf(
+            TL HZ HZ TR);
+
+        gotoxy(
+            x + CLENGTH + 2,
+            y + 1);
+
+        printf(
+            VL "  " VL);
+
+        gotoxy(
+            x + CLENGTH + 2,
+            y + 2);
+
+        printf(
+            BL HZ HZ BR);
+
+        draw_text(
+            x + CLENGTH + 3,
+            y + 1,
+            CYAN,
+            "%2d",
+            card->cost);
+
+        reset_color();
+
+        /*
+            Creature stats.
+
+            IMPORTANT:
+            Use the runtime instance's ATK/HP rather
+            than the base card's values.
+        */
+        if (card->card_type == CARD_CREATURE)
+        {
+            /*
+                Attack
+            */
+            set_color(outline_color);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT - 4);
+
+            printf(
+                TL HZ HZ TR);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT - 3);
+
+            printf(
+                VL "  " VL);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT - 2);
+
+            printf(
+                BL HZ HZ BR);
+
+            draw_text(
+                x + CLENGTH + 3,
+                y + CHEIGHT - 3,
+                ATK_TYPE_COLORS[card->atk_type],
+                "%2d",
+                instance->atk);
+
+            /*
+                HP
+            */
+            set_color(outline_color);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT - 1);
+
+            printf(
+                TL HZ HZ TR);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT);
+
+            printf(
+                VL "  " VL);
+
+            gotoxy(
+                x + CLENGTH + 2,
+                y + CHEIGHT + 1);
+
+            printf(
+                BL HZ HZ BR);
+
+            draw_text(
+                x + CLENGTH + 3,
+                y + CHEIGHT,
+                GREEN,
+                "%2d",
+                instance->hp);
+
+            reset_color();
+        }
+    }
+
+    /*
+        Artwork is still taken from the base Card.
+    */
+    draw_image(
+        x,
+        y,
+        card);
+
+    reset_color();
 }

@@ -40,7 +40,7 @@ typedef struct
 
     int atk;
     int hp;
-
+    int attacks_remaining;
 
     /*-----------------------------------------------------*
         Runtime boolean abilities
@@ -267,5 +267,10 @@ Card *pop_graveyard(
 */
 Card *peek_graveyard(
     const BoardState *board);
+
+void draw_cardInstance(
+    int x,
+    int y,
+    const CardInstance *instance);
 
 #endif

@@ -133,6 +133,24 @@ int main(void)
 
     main_phase(&game, 0);
 
+
+     init_card_instance(
+        &game.board.cards[OPPONENT_SIDE][2],
+        (&cards.cards[1]));
+
+
+    /*-----------------------------------------------------
+        Draw card on board
+    -----------------------------------------------------*/
+
+    draw_card(
+        board_slots[OPPONENT_SIDE][2].x,
+        board_slots[OPPONENT_SIDE][2].y,
+        (&cards.cards[1]));
+
+    sleep(1);
+    attack(&game, 0, 1, 1, 2);
+
     /*
         Keep terminal open.
     */

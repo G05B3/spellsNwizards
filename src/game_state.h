@@ -96,4 +96,11 @@ int main_phase(
     GameState *game,
     int player_index);
 
+int attack(
+    GameState *game,
+    int attacker_player,
+    int attacker_slot,
+    int target_player,
+    int target_slot);
+
 #endif
