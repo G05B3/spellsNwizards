@@ -93,9 +93,8 @@ typedef struct
     int mana_generation; // Generates X mana per turn. Generated mana is retrieved upon the creature's death
     int berserk; // Gains +X Atk after killing an enemy creature
 
-    int poison_tip; // Inflicts Poison when attacking
-    int flammable; // Inflicts Burn when attacking
-    int cold_touch; // Inflicts Freeze when attacking
+    // [BURN, POISON, FREEZE, FLINCH, ...]
+    int inflicts[STATUS_COUNT]; // Inflicts status effect(s) when attacking
 
     char call_kin[CALL_ABILTIIES_LEN]; // Every turn, summon a creature of a target race or name, if possible
     char army[CALL_ABILTIIES_LEN]; // When the creature enters, fill the board of copies of a creature of a target race or name (as many as possible)

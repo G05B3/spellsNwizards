@@ -7,14 +7,13 @@
 #include "deck.h"
 #include "board_art.h"
 #include "card_artwork.h"
+#include "game_state.h"
 
 #define CARD_DATABASE_FILE "src/card_info.json"
 #define DECK_DIRECTORY     "decks"
 
 int main(void)
 {
-    Player player;
-
     Deck selected_deck;
 
     /*
@@ -23,14 +22,12 @@ int main(void)
     srand((unsigned int)time(NULL));
 
     /*
-        Initialize player.
+        Initialize game and players.
     */
-    init_player(
-        &player,
-        "Coninhas");
-
     CardDatabase cards;
     DeckDatabase decks;
+    GameState game;
+    init_game_state_with_players(&game, "Coninhas", "Coninhas2");
 
     int selected;
 
@@ -114,14 +111,16 @@ int main(void)
         Give selected deck to player.
     */
     add_deck_to_player(
-        &player,
+        &((&game)->players[0]),
         &selected_deck);
+
+    add_deck_to_player(&((&game)->players[1]), &selected_deck);
 
     /*
         Shuffle runtime copy.
     */
     shuffle_deck(
-        &player.deck);
+        &((&game)->players[0]).deck);
 
         getchar();
 
@@ -129,8 +128,10 @@ int main(void)
         Opening hand.
     */
     draw_cards_to_hand(
-        &player,
+        &((&game)->players[0]),
         4);
+
+    cast_card((&game), 0);
 
     /*
         Keep terminal open.

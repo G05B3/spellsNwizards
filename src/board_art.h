@@ -7,8 +7,8 @@
     Board Sides
 =========================================================*/
 
-#define OPPONENT_SIDE 0
-#define PLAYER_SIDE   1
+#define OPPONENT_SIDE 1
+#define PLAYER_SIDE   0
 
 #define ARTIFACT_SLOT       0
 #define FIRST_CREATURE_SLOT 1

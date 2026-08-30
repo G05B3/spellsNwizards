@@ -33,9 +33,7 @@ void draw_outline(
         {
             printf(VL);
 
-            for (i = 0; i < CLENGTH; i++)
-                printf(" ");
-
+            gotoxy(x + CLENGTH + 1, y + j + 1);
             printf(VL);
         }
         else
@@ -194,6 +192,29 @@ void draw_card(
     */
 
     draw_image(x, y, card);
+}
+
+/*=========================================================
+    Empty
+=========================================================*/
+
+void draw_empty(
+    int x,
+    int y,
+    const Card *card)
+{
+    const Color *p = card->palette;
+
+    draw_line(x + 1, y + 3, p[0], "                    ");
+    draw_line(x + 1, y + 4, p[0], "                    ");
+    draw_line(x + 1, y + 5, p[0], "                    ");
+    draw_line(x + 1, y + 6, p[0], "                    ");
+    draw_line(x + 1, y + 7, p[0], "                    ");
+    draw_line(x + 1, y + 8, p[0], "                    ");
+    draw_line(x + 1, y + 9, p[0], "                    ");
+    draw_line(x + 1, y + 10, p[1], "                    ");
+    draw_line(x + 1, y + 11, p[1], "                    ");
+    draw_line(x + 1, y + 12, p[1], "                    ");
 }
 
 /*=========================================================
@@ -870,6 +891,7 @@ void draw_image(
     int y,
     const Card *card)
 {
+    draw_empty(x, y, card);
     switch (card->image_id)
     {
     case 0:

@@ -51,9 +51,8 @@ static void init_card(Card *card)
     card->mana_generation = 0;
     card->berserk = 0;
 
-    card->poison_tip = 0;
-    card->flammable = 0;
-    card->cold_touch = 0;
+    for (i = 0; i < STATUS_COUNT; i++)
+        card->inflicts[i] = 0;
 
     /* String abilities */
     card->call_kin[0] = '\0';
@@ -375,30 +374,30 @@ static void parse_ability(
     if (!strcasecmp(type->valuestring, "Poison Tip"))
     {
         if (cJSON_IsNumber(value))
-            card->poison_tip =
-                value->valueint;
-
+            card->inflicts[STATUS_POISON] = value->valueint;
         return;
     }
 
     if (!strcasecmp(type->valuestring, "Flammable"))
     {
         if (cJSON_IsNumber(value))
-            card->flammable =
-                value->valueint;
-
+            card->inflicts[STATUS_BURN] = value->valueint;
         return;
     }
 
     if (!strcasecmp(type->valuestring, "Cold Touch"))
     {
         if (cJSON_IsNumber(value))
-            card->cold_touch =
-                value->valueint;
-
+            card->inflicts[STATUS_FREEZE] = value->valueint;
         return;
     }
 
+    if (!strcasecmp(type->valuestring, "Blight Touch"))
+    {
+        if (cJSON_IsNumber(value))
+            card->inflicts[STATUS_BLIGHT] = value->valueint;
+        return;
+    }
 
     /*-----------------------------------------------------
         String abilities
@@ -917,9 +916,7 @@ void print_statistics(const CardDatabase *db)
     int mana_generation_count = 0;
     int berserk_count = 0;
 
-    int poison_tip_count = 0;
-    int flammable_count = 0;
-    int cold_touch_count = 0;
+    int inflicts_count[STATUS_COUNT] = {0};
 
     int call_kin_count = 0;
     int army_count = 0;
@@ -1002,14 +999,11 @@ void print_statistics(const CardDatabase *db)
         if (card->berserk > 0)
             berserk_count++;
 
-        if (card->poison_tip > 0)
-            poison_tip_count++;
-
-        if (card->flammable > 0)
-            flammable_count++;
-
-        if (card->cold_touch > 0)
-            cold_touch_count++;
+        for (int st = 0; st < STATUS_COUNT; st++)
+        {
+            if (card->inflicts[st] > 0)
+                inflicts_count[st]++;
+        }
 
         /*-----------------------------------------
             String abilities
@@ -1248,17 +1242,21 @@ void print_statistics(const CardDatabase *db)
 
     printf("%-25s %4d    %-25s %4d\n",
            "Poison Tip:",
-           poison_tip_count,
+           inflicts_count[STATUS_POISON],
            "Void:",
            attack_immunity_count[ATTACK_VOID]);
 
     printf("%-25s %4d\n",
            "Flammable:",
-           flammable_count);
+           inflicts_count[STATUS_BURN]);
 
     printf("%-25s %4d\n",
            "Cold Touch:",
-           cold_touch_count);
+           inflicts_count[STATUS_FREEZE]);
+
+    printf("%-25s %4d\n",
+           "Blight Touch:",
+           inflicts_count[STATUS_BLIGHT]);
 
     printf("%-25s %4d\n",
            "Call Kin:",
