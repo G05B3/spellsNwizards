@@ -193,6 +193,7 @@ void draw_card(
     */
 
     draw_image(x, y, card);
+    fflush(stdout);
 }
 
 void delete_card(int x, int y)
@@ -205,6 +206,7 @@ void delete_card(int x, int y)
         for (j = 0; j < CLENGTH + 6; j++)
             printf(" ");
     }
+    fflush(stdout);
 }
 
 /*=========================================================

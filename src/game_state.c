@@ -4,6 +4,7 @@
 #include "game_state.h"
 
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 
 
@@ -459,6 +460,20 @@ int main_phase(
     return 1;
 }
 
+static bool is_attack_immune(
+    const CardInstance *target,
+    AttackType attack_type)
+{
+    if (target == NULL)
+        return true;
+
+    if (attack_type <= ATTACK_NONE ||
+        attack_type >= ATTACK_TYPE_COUNT)
+        return false;
+
+    return target->attack_immunity[attack_type];
+}
+
 int attack(
     GameState *game,
     int attacker_player,
@@ -521,8 +536,55 @@ int attack(
         For now both creatures deal their ATK
         simultaneously.
     */
-    target->hp -= attacker->atk;
-    attacker->hp -= target->atk;
+    bool attacker_hits = false;
+    bool target_hits = false;
+
+    // Handle First Strike and Attack Immunities
+   if (attacker->first_strike && !target->first_strike)
+    {
+        attacker_hits = !is_attack_immune(target, attacker->atk_type);
+
+        if (target->hp > attacker->atk)
+            target_hits = !is_attack_immune(attacker, target->atk_type);
+    }
+    else if (!attacker->first_strike && target->first_strike)
+    {
+        target_hits = !is_attack_immune(attacker, target->atk_type);
+
+        if (attacker->hp > target->atk)
+            attacker_hits = !is_attack_immune(target, attacker->atk_type);
+    }
+    else
+    {
+        attacker_hits = !is_attack_immune(target, attacker->atk_type);
+        target_hits = !is_attack_immune(attacker, target->atk_type);
+    }
+
+    /*
+        Handle attacker's and target's attacks
+    */
+   if (attacker_hits)
+   {
+        // 1. Handle Hit
+        target->hp -= attacker->atk;
+
+        // 2. Handle Vampirism
+        if (attacker->vampirism)
+        {
+            attacker->hp += attacker->atk;
+        }
+   }
+   if (target_hits)
+   {
+        // 1. Handle Hit
+        attacker->hp -= target->atk;
+
+        // 2. Handle Vampirism
+        if (target->vampirism)
+        {
+            target->hp += target->atk;
+        }
+   }
 
     /*
         Consume one attack.
@@ -541,6 +603,36 @@ int attack(
         board_slots[target_player][target_slot].x,
         board_slots[target_player][target_slot].y,
         target);
+
+    sleep(1);
+    
+    // If target dies
+    if (target->hp <= 0)
+    {
+        target->hp = 0;
+        delete_card(
+            board_slots[target_player][target_slot].x,
+            board_slots[target_player][target_slot].y);
+
+        add_to_graveyard(
+            &game->board,
+            target->card);
+
+        target->active = false;
+    }
+    // If attacker dies
+    if (attacker->hp <= 0)
+    {
+        attacker->hp = 0;
+        delete_card(
+            board_slots[attacker_player][attacker_slot].x,
+            board_slots[attacker_player][attacker_slot].y);
+        
+            add_to_graveyard(
+            &game->board,
+            attacker->card);
+    }
+
 
     return 1;
 }

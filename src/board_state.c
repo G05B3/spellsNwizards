@@ -35,6 +35,8 @@ void init_card_instance(
     instance->hp  = card->hp;
     instance->attacks_remaining = card->multiple_attacks;
 
+    instance->atk_type = card->atk_type;
+
 
     /*-----------------------------------------------------*
         Boolean abilities
@@ -455,4 +457,5 @@ void draw_cardInstance(
         card);
 
     reset_color();
+    fflush(stdout);
 }

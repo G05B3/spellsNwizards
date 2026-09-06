@@ -42,6 +42,8 @@ typedef struct
     int hp;
     int attacks_remaining;
 
+    AttackType atk_type;
+
     /*-----------------------------------------------------*
         Runtime boolean abilities
         -----------------------------------------------------

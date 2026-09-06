@@ -136,7 +136,7 @@ int main(void)
 
      init_card_instance(
         &game.board.cards[OPPONENT_SIDE][2],
-        (&cards.cards[1]));
+        (&cards.cards[7]));
 
 
     /*-----------------------------------------------------
@@ -146,7 +146,7 @@ int main(void)
     draw_card(
         board_slots[OPPONENT_SIDE][2].x,
         board_slots[OPPONENT_SIDE][2].y,
-        (&cards.cards[1]));
+        (&cards.cards[7]));
 
     sleep(1);
     attack(&game, 0, 1, 1, 2);
